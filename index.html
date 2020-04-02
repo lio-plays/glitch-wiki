@@ -1,0 +1,10 @@
+Project
+
+<a href="" id="url"></a>
+
+<script>
+  const project = location.href.match(/.*\/\/(.*?)\./)[1];
+  const urltag = document.querySelector("#url");
+  urltag.textContent = project;
+  urltag.href = `https://glitch.com/edit/#!/${project}?path=index.html`;
+</script>
