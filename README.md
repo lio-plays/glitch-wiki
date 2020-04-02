@@ -1,4 +1,4 @@
-# glitch-starter
+# glitch-wiki
 
 ## On github:
 
@@ -6,7 +6,8 @@
 
 ## On glitch
 
-cloned from [lio-plays/glitch-starter](https://github.com/lio-plays/glitch-wiki
+cloned from [lio-plays/glitch-wiki](https://github.com/lio-plays/glitch-wiki)
+
 ## Generate GitHub Import Button
 
 [Here](https://github-import.glitch.me/)
