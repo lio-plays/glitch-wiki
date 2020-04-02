@@ -6,7 +6,7 @@
 
 ## On glitch
 
-cloned from [lio-plays/glitch-wiki](https://github.com/lio-plays/glitch-wiki
+cloned from [lio-plays/glitch-wiki](https://github.com/lio-plays/glitch-wiki)
 
 ## Generate GitHub Import Button
 
