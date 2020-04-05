@@ -1,20 +1,35 @@
 // root ("/") redirects to last page.
-//because glitch loads "/" at refresh
+// because glitch loads "/" at refresh
 
-const path = location.pathname.substring(1);
-if (path === "") {
+const path = location.pathname;
+if (path === "/") {
   const path = localStorage.getItem("lastPath");
-  location.replace(path);
+  if (path === "/") {
+    // just in case. would lead to recursion.
+    location.replace("index.html");
+  } else {
+    location.replace(path);
+  }
 } else {
-  localStorage.setItem("lastPath", path);
+  const urltag = document.querySelector("#url");
+  const project = location.host.match(/(.*?)\./)[1];
+
+  //save last path, update on hashchange
+
+  function updateLastPath() {
+    const lastPath = location.pathname + location.hash;
+    localStorage.setItem("lastPath", lastPath);
+    urltag.textContent = `${project}${lastPath}`;
+  }
+
+  onhashchange = () => updateLastPath();
+  updateLastPath();
 
   // url from here to glitch-editor
 
-  const project = location.href.match(/.*\/\/(.*?)\./)[1];
-  const urltag = document.querySelector("#url");
-
-  urltag.textContent = `${project} / ${path}`;
-  urltag.href = `https://glitch.com/edit/#!/${project}?path=${path}`;
+  urltag.href = `https://glitch.com/edit/#!/${project}?path=${path.substring(
+    1
+  )}`;
 
   // markdown
 
