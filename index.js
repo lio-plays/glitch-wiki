@@ -2,13 +2,13 @@
 // because glitch loads "/" at refresh
 
 const path = location.pathname;
-if (path === "/") {
-  const path = localStorage.getItem("lastPath");
-  if (path === "/") {
+if (path === "/" && location.hash === "") {
+  const lastPath = localStorage.getItem("lastPath");
+  if (lastPath === "/") {
     // just in case. would lead to recursion.
     location.replace("index.html");
   } else {
-    location.replace(path);
+    location.replace(lastPath);
   }
 } else {
   const urltag = document.querySelector("#url");
@@ -27,17 +27,32 @@ if (path === "/") {
 
   // url from here to glitch-editor
 
-  urltag.href = `https://glitch.com/edit/#!/${project}?path=${path.substring(
-    1
-  )}`;
+  const glitchpath =
+    path === "/" && location.hash !== ""
+      ? location.hash.substring(2)
+      : path.substring(1);
+  urltag.href = `https://glitch.com/edit/#!/${project}?path=${glitchpath}`;
 
   // markdown
 
   const markdowntag = document.querySelector("#markdown");
-  const src = markdowntag.innerHTML;
-  const md = window.markdownit();
-  const result = md.render(src);
   const htmltag = document.querySelector("#html");
-  markdowntag.innerHTML = "";
-  htmltag.innerHTML = result;
+  (async function() {
+    if (path === "/" && location.hash !== "") {
+      htmltag.innerHTML = "<h1>Loading</h1>";
+      const response = await fetch(new Request(location.hash.substring(1)));
+      if (response.status === 200) {
+        var src = await response.text();
+      } else {
+        var src = "Error. Goto [Index](index.html)";
+      }
+    } else {
+      var src = markdowntag.innerHTML;
+    }
+
+    markdowntag.innerHTML = "";
+    const md = window.markdownit();
+    const result = md.render(src);
+    htmltag.innerHTML = result;
+  })();
 }
