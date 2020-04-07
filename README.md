@@ -1,6 +1,8 @@
 # glitch-wiki
 
-**A wiki which you edit in glitch**
+## A wiki which you edit in glitch
+
+A primitive wiki which uses glitch for editing. pages have a link which opens the matching glitch file
 
 ## Features: 
 * go from a glitch hosted page to the sourcefile in glitch, edit there
