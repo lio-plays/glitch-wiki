@@ -42,6 +42,11 @@ async function fillPage() {
   htmltag.innerHTML = result;
 }
 
+function fillFirstPage() {
+  onhashchange = () => fillPage();
+  fillPage();
+}
+
 try {
   if (path === "/" && location.hash === "") {
     const lastpath = localStorage.getItem("lastPath");
@@ -51,15 +56,14 @@ try {
     ) {
       location.replace("index.html");
     } else {
+      location.replace(lastpath);
+      // with "/#something" no happens but location.hash is changed, so  fillPage works
       if (lastpath.match(/^\/#/)) {
-        fillPage();
-      } else {
-        location.replace(lastpath);
+        fillFirstPage();
       }
     }
   } else {
-    onhashchange = () => fillPage();
-    fillPage();
+    fillFirstPage();
   }
 } catch (e) {
   console.log(e);
